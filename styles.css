@@ -57,7 +57,7 @@ a {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 0rem;
 }
 
 .site-header {
@@ -96,7 +96,7 @@ a {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-left: 0;
+  margin-left: -75px;
 }
 
 .logo-text {
@@ -399,44 +399,10 @@ h1 span {
 }
 
 .section {
-  padding: 5.5rem 0;
+  padding: 9.8rem 0;
   color: #e8e2d3;
-  background: #0a0b10;
+  background: black;
   position: relative;
-}
-
-.section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 200px;
-  background: linear-gradient(180deg,
-    #05060a 0%,
-    rgba(5, 6, 10, 0.8) 30%,
-    rgba(5, 6, 10, 0.4) 60%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-.section::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 200px;
-  background: linear-gradient(180deg,
-    transparent 0%,
-    rgba(5, 6, 10, 0.4) 40%,
-    rgba(5, 6, 10, 0.8) 70%,
-    #05060a 100%
-  );
-  pointer-events: none;
-  z-index: 1;
 }
 
 .section-dark {
@@ -445,25 +411,17 @@ h1 span {
   position: relative;
 }
 
-.section-dark::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 200px;
-  background: linear-gradient(180deg,
-    #0a0b10 0%,
-    rgba(10, 11, 16, 0.8) 30%,
-    rgba(10, 11, 16, 0.4) 60%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 1;
+.section-transparent {
+  background: transparent;
+  color: #f8fafc;
+  position: relative;
 }
 
-
 .section-dark .eyebrow {
+  color: var(--primary);
+}
+
+.section-transparent .eyebrow {
   color: var(--primary);
 }
 
@@ -475,7 +433,7 @@ h1 span {
   text-align: center;
   font-size: 1.5rem;
   font-weight: 500;
-  color: rgba(245, 242, 235, 0.85);
+  color: rgba(245, 242, 235, 1);
   margin-bottom: 3rem;
   letter-spacing: -0.01em;
 }
@@ -487,34 +445,45 @@ h1 span {
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
+  gap: 4.5rem;
   margin-top: 2.5rem;
 }
 
 .service-card {
-  background: rgba(15, 18, 25, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  padding: 2.5rem;
+  background: transparent;
+  border: 1.5px solid rgba(200, 169, 107, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
   position: relative;
-  overflow: hidden;
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  overflow: visible;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .service-card:hover {
-  border-color: rgba(200, 169, 107, 0.5);
-  transform: translateY(-4px);
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.service-card-bg {
+  display: none;
+}
+
+.service-card-inner {
+  display: none;
 }
 
 .service-visual {
-  margin-bottom: 2rem;
-  height: 180px;
+  margin-bottom: 1.5rem;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(8, 10, 15, 0.8);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(200, 169, 107, 0.08) 0%, rgba(8, 10, 15, 0.6) 100%);
+  border-radius: 16px;
+  border: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .service-icon {
@@ -528,19 +497,56 @@ h1 span {
   color: var(--primary);
 }
 
+.service-visual svg {
+  width: 100%;
+  height: 100%;
+  color: var(--primary);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover .service-visual svg {
+  transform: scale(1.05);
+}
+
 .service-card h3 {
-  font-size: 1.75rem;
+  font-size: 1.6rem;
   font-weight: 600;
   margin: 0 0 1rem 0;
-  color: #f8fafc;
+  color: white;
   letter-spacing: -0.01em;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.service-card h3::after {
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), transparent);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover h3 {
+  color: var(--primary);
+}
+
+.service-card:hover h3::after {
+  width: 60px;
 }
 
 .service-card p {
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.7;
-  color: rgba(245, 242, 235, 0.65);
+  color: rgba(245, 242, 235, 0.75);
   margin: 0;
+  transition: color 0.3s ease;
+}
+
+.service-card:hover p {
+  color: rgba(245, 242, 235, 0.9);
 }
 
 .case-card,
@@ -583,9 +589,9 @@ h1 span {
 }
 
 .process-header h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: 2.5rem;
   margin: 0;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.02em;
   position: relative;
   display: inline-block;
@@ -614,7 +620,7 @@ h1 span {
 
 .process-step {
   background: transparent;
-  padding: 1.5rem 2rem 1.5rem 3rem;
+  padding: 1.5rem 2rem 1.5rem 5rem;
   position: relative;
   transition: all 0.3s ease;
   margin-left: 1.5rem;
@@ -646,7 +652,7 @@ h1 span {
 .process-step::before {
   content: "";
   position: absolute;
-  left: -1.5px;
+  left: 3.2rem;
   top: 50%;
   transform: translateY(-50%);
   width: 2px;
@@ -672,14 +678,18 @@ h1 span {
 
 
 .step-number {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 600;
   line-height: 1;
-  margin-bottom: 0.75rem;
-  display: inline-block;
+  margin-bottom: 0;
+  display: block;
   font-family: 'Courier New', monospace;
   color: rgba(200, 169, 107, 0.5);
   transition: color 0.3s ease;
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .process-step:hover .step-number {
@@ -687,7 +697,7 @@ h1 span {
 }
 
 .process-step h3 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
   margin: 0 0 0.75rem 0;
   color: #f8fafc;
@@ -804,6 +814,15 @@ h1 span {
   padding: 0.95rem;
   color: #f8fafc;
   font-family: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(200, 169, 107, 0.1);
 }
 
 .contact-form input::placeholder,
@@ -818,7 +837,7 @@ h1 span {
 
 .site-footer {
   padding: 1rem 0 0.75rem;
-  background: transparent;
+  background: black;
 }
 
 .footer-content {
@@ -943,6 +962,12 @@ h1 span {
   .process-step {
     margin-left: 0.5rem;
     padding: 1.5rem 1rem 1.5rem 2.5rem;
+  }
+
+  .process-step p {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
   }
 }
 
