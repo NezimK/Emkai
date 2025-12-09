@@ -1,3 +1,88 @@
+// Three.js Background
+const canvas = document.getElementById("three-bg");
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+camera.position.z = 5;
+
+// Créer des particules
+const particlesGeometry = new THREE.BufferGeometry();
+const particlesCount = 400;
+const posArray = new Float32Array(particlesCount * 3);
+
+for (let i = 0; i < particlesCount * 3; i++) {
+  posArray[i] = (Math.random() - 0.5) * 10;
+}
+
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+const particlesMaterial = new THREE.PointsMaterial({
+  size: 0.025,
+  color: 0xC8A96B,
+  transparent: true,
+  opacity: 0.8,
+  blending: THREE.AdditiveBlending,
+  sizeAttenuation: true,
+  map: createCircleTexture()
+});
+
+// Fonction pour créer une texture circulaire
+function createCircleTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 32;
+  canvas.height = 32;
+  const ctx = canvas.getContext('2d');
+
+  const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+  gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+  gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.5)');
+  gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 32, 32);
+
+  const texture = new THREE.Texture(canvas);
+  texture.needsUpdate = true;
+  return texture;
+}
+
+const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particlesMesh);
+
+// Animation
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener('mousemove', (event) => {
+  mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+  mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+});
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  particlesMesh.rotation.y += 0.0005;
+  particlesMesh.rotation.x += 0.0003;
+
+  // Mouvement subtle basé sur la souris
+  particlesMesh.rotation.y += mouseX * 0.0001;
+  particlesMesh.rotation.x += mouseY * 0.0001;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+// Responsive
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
 // Attendre que le DOM soit chargé
 document.addEventListener("DOMContentLoaded", () => {
   const navToggle = document.getElementById("nav-toggle");
@@ -50,6 +135,15 @@ document.addEventListener("DOMContentLoaded", () => {
       lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
   }
+
+  // Gestion des barres de la section méthode
+  const processSteps = document.querySelectorAll(".process-step");
+
+  processSteps.forEach((step) => {
+    step.addEventListener("mouseenter", () => {
+      step.classList.add("bar-visible");
+    });
+  });
 
   // Gestion du formulaire de contact
   const contactForm = document.getElementById("contact-form");
