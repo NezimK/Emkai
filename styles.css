@@ -504,6 +504,11 @@ h1 span {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.service-visual canvas {
+  width: 100%;
+  height: 100%;
+}
+
 .service-card:hover .service-visual svg {
   transform: scale(1.05);
 }
@@ -547,6 +552,139 @@ h1 span {
 
 .service-card:hover p {
   color: rgba(245, 242, 235, 0.9);
+}
+
+/* Animations SVG Immo Copilot au survol */
+/* Animation des lignes de texte - échange client/IA */
+.service-card:hover .text-line-1-1 {
+  animation: textAppear 6s infinite;
+}
+
+.service-card:hover .text-line-1-2 {
+  animation: textAppear 6s 0.2s infinite;
+}
+
+.service-card:hover .text-line-1-3 {
+  animation: textAppear 6s 0.4s infinite;
+}
+
+.service-card:hover .text-line-2-1 {
+  animation: textAppear 6s 3s infinite;
+}
+
+.service-card:hover .text-line-2-2 {
+  animation: textAppear 6s 3.2s infinite;
+}
+
+.service-card:hover .text-line-2-3 {
+  animation: textAppear 6s 3.4s infinite;
+}
+
+@keyframes textAppear {
+  0%, 16.66% { opacity: 0; }
+  20%, 46.66% { opacity: 0.5; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Animation des ondes de communication */
+.service-card:hover .wave-1 {
+  animation: wavePulse 2s infinite;
+}
+
+.service-card:hover .wave-2 {
+  animation: wavePulse 2s 0.3s infinite;
+}
+
+.service-card:hover .wave-3 {
+  animation: wavePulse 2s 0.6s infinite;
+}
+
+@keyframes wavePulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+}
+
+/* Animations SVG Audit au survol - Minimaliste et subtile */
+/* États par défaut - courbe invisible */
+.audit-curve {
+  opacity: 0;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  transition: opacity 1s ease-out, stroke-dashoffset 1.8s ease-out;
+}
+
+.audit-points circle {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+
+/* Animations au survol */
+.service-card:hover .audit-bar {
+  animation: barGrow 0.8s ease-out forwards;
+}
+
+.service-card:hover .audit-curve {
+  opacity: 0.8;
+  stroke-dashoffset: 0;
+}
+
+.service-card:hover .audit-points circle {
+  opacity: 1;
+}
+
+@keyframes barGrow {
+  0% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+/* Animations SVG Solutions IA au survol */
+/* Animation des flux de données */
+@keyframes dataFlow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes pulseNode {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Au survol - activer les animations */
+.service-card:hover line[stroke-dasharray] {
+  animation: dataFlow 1.5s linear infinite;
+}
+
+.service-card:hover circle[cx="110"],
+.service-card:hover circle[cx="170"],
+.service-card:hover circle[cx="140"][cy="62"],
+.service-card:hover circle[cx="140"][cy="114"] {
+  animation: pulseNode 1.5s ease-in-out infinite;
+}
+
+@keyframes fullChartZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .case-card,
