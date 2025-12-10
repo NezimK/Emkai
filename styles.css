@@ -26,6 +26,7 @@ body {
   background-color: #05060a;
   position: relative;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 #three-bg {
@@ -918,6 +919,7 @@ h1 span {
 }
 
 .contact-form {
+  position: relative;
   background: rgba(5, 7, 13, 0.75);
   border-radius: 24px;
   padding: 2.5rem;
@@ -971,6 +973,33 @@ h1 span {
 .form-note {
   font-size: 0.8rem;
   color: rgba(248, 250, 252, 0.7);
+  margin-bottom: 1.7rem;
+}
+
+.form-message {
+  position: absolute;
+  bottom: 0.4rem;
+  left: 0;
+  right: 0;
+  padding: 4px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s ease;
+  text-align: center;
+}
+
+.form-message.success,
+.form-message.error {
+  color: #f5f2eb;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-message .success-icon,
+.form-message .error-icon {
+  display: none;
 }
 
 .site-footer {

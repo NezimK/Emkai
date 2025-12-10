@@ -404,18 +404,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (response.ok) {
           // Succès
-          formMessage.textContent = "✓ Merci ! Votre demande a été envoyée avec succès.";
-          formMessage.style.color = "#10b981";
-          formMessage.style.marginTop = "1rem";
+          formMessage.textContent = 'Merci. Votre demande a bien été prise en compte ✓';
+          formMessage.className = "form-message success";
           contactForm.reset();
         } else {
           throw new Error("Erreur lors de l'envoi");
         }
       } catch (error) {
         // Erreur
-        formMessage.textContent = "✗ Une erreur est survenue. Veuillez réessayer.";
-        formMessage.style.color = "#ef4444";
-        formMessage.style.marginTop = "1rem";
+        formMessage.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+        formMessage.className = "form-message error";
         console.error("Erreur:", error);
       } finally {
         // Réactiver le bouton
