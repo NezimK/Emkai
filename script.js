@@ -1,108 +1,153 @@
-// Three.js Background avec gestion de visibilité
+// Canvas 2D Background avec particules (reproduction fidèle de Three.js)
 const canvas = document.getElementById("three-bg");
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-camera.position.z = 5;
-
-// Créer une texture circulaire
-function createCircleTexture() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 32;
-  canvas.height = 32;
+if (!canvas) {
+  console.error('Canvas #three-bg introuvable');
+} else {
   const ctx = canvas.getContext('2d');
 
-  const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-  gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-  gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.5)');
-  gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  // Configuration du canvas
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
 
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, 32, 32);
+  resizeCanvas();
 
-  const texture = new THREE.Texture(canvas);
-  texture.needsUpdate = true;
-  return texture;
+  // Création de 300 particules avec propriétés 3D - effet système solaire
+  const particles = [];
+  const particlesCount = 300;
+
+  for (let i = 0; i < particlesCount; i++) {
+    particles.push({
+      x: (Math.random() - 0.5) * 18, // Large dispersion pour effet spatial
+      y: (Math.random() - 0.5) * 18,
+      z: (Math.random() - 0.5) * 18
+    });
+  }
+
+  // Variables pour l'animation
+  let rotationY = 0;
+  let rotationX = 0;
+  let mouseX = 0;
+  let mouseY = 0;
+  let isPageVisible = true;
+
+  // Optimisation: throttle du mousemove
+  let lastMouseUpdate = 0;
+  const MOUSE_THROTTLE = 16; // ~60fps
+
+  document.addEventListener('mousemove', (event) => {
+    const now = Date.now();
+    if (now - lastMouseUpdate < MOUSE_THROTTLE) return;
+
+    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    lastMouseUpdate = now;
+  });
+
+  // Pause l'animation quand l'onglet n'est pas visible
+  document.addEventListener('visibilitychange', () => {
+    isPageVisible = !document.hidden;
+  });
+
+  // Fonction d'animation
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Ne pas animer si la page n'est pas visible
+    if (!isPageVisible) return;
+
+    // Effacer le canvas avec un fond noir transparent
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Mise à jour de la rotation - effet système solaire qui tourne lentement
+    rotationY += 0.0008; // Rotation Y plus visible
+    rotationX += 0.0004; // Rotation X plus visible
+
+    // Mouvement subtle basé sur la souris
+    rotationY += mouseX * 0.0002;
+    rotationX += mouseY * 0.0002;
+
+    // Calculer les matrices de rotation
+    const cosY = Math.cos(rotationY);
+    const sinY = Math.sin(rotationY);
+    const cosX = Math.cos(rotationX);
+    const sinX = Math.sin(rotationX);
+
+    // Paramètres de projection - perspective accentuée pour effet 3D
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const fov = 6; // Field of view élargi pour meilleur effet 3D
+    const scale = Math.min(canvas.width, canvas.height) / 14; // Ajusté pour la dispersion
+
+    // Dessiner chaque particule avec projection 3D
+    particles.forEach(particle => {
+      // Rotation Y
+      let x = particle.x;
+      let y = particle.y;
+      let z = particle.z;
+
+      let tempX = x * cosY - z * sinY;
+      let tempZ = x * sinY + z * cosY;
+      x = tempX;
+      z = tempZ;
+
+      // Rotation X
+      let tempY = y * cosX - z * sinX;
+      tempZ = y * sinX + z * cosX;
+      y = tempY;
+      z = tempZ;
+
+      // Projection perspective
+      const perspective = fov / (fov + z);
+      const projectedX = centerX + x * scale * perspective;
+      const projectedY = centerY + y * scale * perspective;
+
+      // Calculer la taille basée sur la distance - effet de profondeur prononcé
+      const size = 0.018 * scale * perspective;
+
+      // Calculer l'opacité avec forte variation de profondeur (effet 3D spatial)
+      const opacity = Math.max(0.1, Math.min(0.7, perspective * 0.7));
+
+      // Ne dessiner que si la particule est visible
+      if (size > 0.1 && opacity > 0.01) {
+        // Créer un dégradé radial pour effet de glow très subtle
+        const gradient = ctx.createRadialGradient(
+          projectedX, projectedY, 0,
+          projectedX, projectedY, size * 2
+        );
+        gradient.addColorStop(0, `rgba(200, 169, 107, ${opacity})`);
+        gradient.addColorStop(0.5, `rgba(200, 169, 107, ${opacity * 0.2})`);
+        gradient.addColorStop(1, 'rgba(200, 169, 107, 0)');
+
+        // Dessiner la particule avec glow
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(projectedX, projectedY, size * 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Point central très fin
+        ctx.fillStyle = `rgba(200, 169, 107, ${opacity * 0.8})`;
+        ctx.beginPath();
+        ctx.arc(projectedX, projectedY, size * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+  }
+
+  // Gestion du redimensionnement (optimisé avec debounce)
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      resizeCanvas();
+    }, 100);
+  });
+
+  // Lancer l'animation
+  animate();
 }
-
-// Créer des particules
-const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 400;
-const posArray = new Float32Array(particlesCount * 3);
-
-for (let i = 0; i < particlesCount * 3; i++) {
-  posArray[i] = (Math.random() - 0.5) * 10;
-}
-
-particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-const particlesMaterial = new THREE.PointsMaterial({
-  size: 0.025,
-  color: 0xC8A96B,
-  transparent: true,
-  opacity: 0.8,
-  blending: THREE.AdditiveBlending,
-  sizeAttenuation: true,
-  map: createCircleTexture()
-});
-
-const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-scene.add(particlesMesh);
-
-// Animation avec gestion de visibilité de page
-let mouseX = 0;
-let mouseY = 0;
-let isPageVisible = true;
-
-// Optimisation: throttle du mousemove
-let lastMouseUpdate = 0;
-const MOUSE_THROTTLE = 16; // ~60fps
-
-document.addEventListener('mousemove', (event) => {
-  const now = Date.now();
-  if (now - lastMouseUpdate < MOUSE_THROTTLE) return;
-
-  mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-  mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-  lastMouseUpdate = now;
-});
-
-// Pause l'animation quand l'onglet n'est pas visible
-document.addEventListener('visibilitychange', () => {
-  isPageVisible = !document.hidden;
-});
-
-function animate() {
-  requestAnimationFrame(animate);
-
-  // Ne pas animer si la page n'est pas visible
-  if (!isPageVisible) return;
-
-  particlesMesh.rotation.y += 0.0005;
-  particlesMesh.rotation.x += 0.0003;
-
-  // Mouvement subtle basé sur la souris
-  particlesMesh.rotation.y += mouseX * 0.0001;
-  particlesMesh.rotation.x += mouseY * 0.0001;
-
-  renderer.render(scene, camera);
-}
-
-animate();
-
-// Responsive (optimisé avec debounce)
-let resizeTimeout;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(() => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  }, 100);
-});
 
 // Attendre que le DOM soit chargé
 document.addEventListener("DOMContentLoaded", () => {
