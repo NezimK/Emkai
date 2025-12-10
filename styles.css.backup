@@ -8,18 +8,16 @@
   --dark: #05060a;
   --muted: rgba(245, 242, 235, 0.72);
   --border: rgba(255, 255, 255, 0.08);
+  --card: #0d101a;
+  --card-light: rgba(255, 255, 255, 0.03);
   --glow: rgba(200, 169, 107, 0.24);
+  --font-main: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-html {
-  overflow-x: hidden;
-  width: 100%;
 }
 
 body {
@@ -29,8 +27,6 @@ body {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
-  width: 100%;
-  max-width: 100vw;
 }
 
 #three-bg {
@@ -70,8 +66,6 @@ a {
   top: 0;
   left: 0;
   right: 0;
-  width: 100%;
-  max-width: 100vw;
   z-index: 10;
   background: transparent;
   backdrop-filter: none;
@@ -79,9 +73,13 @@ a {
   box-shadow: none;
   opacity: 1;
   transition: opacity 0.6s ease, transform 0.6s ease;
-  overflow-x: hidden;
 }
 
+.site-header.hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
 
 .header-wrapper {
   display: flex;
@@ -127,7 +125,6 @@ a {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  max-width: calc(100vw - 3rem);
 }
 
 .nav a {
@@ -403,7 +400,7 @@ h1 span {
 }
 
 .section {
-  padding: 10rem 0;
+  padding: 9.8rem 0;
   color: #e8e2d3;
   background: black;
   position: relative;
@@ -459,11 +456,12 @@ h1 span {
   border-radius: 16px;
   padding: 1.5rem;
   position: relative;
-  overflow: hidden;
-  transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .service-card:hover {
+  transform: translateY(-8px);
   border-color: var(--primary);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
@@ -473,12 +471,7 @@ h1 span {
 }
 
 .service-card-inner {
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
-}
-
-.service-card:hover .service-card-inner {
-  transform: translateY(-8px);
+  display: none;
 }
 
 .service-visual {
@@ -1023,7 +1016,6 @@ h1 span {
 
 .footer-content .logo {
   margin-left: 0;
-  margin-right: -50px;
 }
 
 .footer-content .logo-image {
@@ -1044,7 +1036,6 @@ h1 span {
   margin: 0;
 }
 
-/* Tablette et mobile (< 900px) */
 @media (max-width: 900px) {
   .container {
     padding: 0 1.5rem;
@@ -1056,18 +1047,13 @@ h1 span {
   }
 
   .logo {
-    margin-left: 10px;
-    margin-top: 25px;
+    margin-left: 0;
   }
 
   .footer-content {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
-  }
-
-  .footer-content .logo {
-    margin-right: 0;
   }
 
   .nav {
@@ -1114,8 +1100,6 @@ h1 span {
 
   .nav-toggle {
     display: flex;
-    margin-top: 25px;
-    margin-right: 5px;
   }
 
   .hero {
@@ -1125,10 +1109,6 @@ h1 span {
 
   .hero-content {
     max-width: 100%;
-  }
-
-  .hero-title {
-    font-size: 2.5rem;
   }
 
   .hero-actions {
@@ -1142,245 +1122,19 @@ h1 span {
     text-align: center;
   }
 
-  /* Services grid responsive */
-  .services-grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
-  .services-intro {
-    font-size: 1.25rem;
-  }
-
-  .service-visual {
-    height: 180px;
-  }
-
-  /* Process grid */
   .process-grid {
-    grid-template-columns: 1fr;
     padding: 0 1rem;
   }
 
   .process-step {
-    margin-left: 0;
-    padding: 1.5rem 1rem 1.5rem 3.5rem;
-  }
-
-  .process-step::before {
-    left: 2.5rem;
-  }
-
-  .step-number {
-    left: 0.5rem;
-    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    padding: 1.5rem 1rem 1.5rem 2.5rem;
   }
 
   .process-step p {
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
-  }
-
-  /* Contact form */
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-form {
-    padding: 2rem;
-  }
-
-  .form-message {
-    bottom: 1rem;
-  }
-}
-
-/* Mobile (< 600px) */
-@media (max-width: 600px) {
-  :root {
-    font-size: 15px;
-  }
-
-  .container {
-    padding: 0 1rem;
-  }
-
-  /* Hero section */
-  .hero {
-    padding: 5rem 0 3rem;
-    min-height: 70vh;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-    line-height: 1.2;
-  }
-
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-
-  /* Services */
-  .services-intro {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-  }
-
-  .services-grid {
-    gap: 2rem;
-  }
-
-  .service-card {
-    padding: 1.25rem;
-  }
-
-  .service-visual {
-    height: 160px;
-    margin-bottom: 1rem;
-  }
-
-  .service-card h3 {
-    font-size: 1.4rem;
-  }
-
-  .service-card p {
-    font-size: 0.9rem;
-  }
-
-  /* Process section */
-  .process-header h2 {
-    font-size: 1.8rem;
-  }
-
-  .process-step {
-    padding: 1.25rem 1rem 1.25rem 3rem;
-  }
-
-  .process-step::before {
-    left: 2rem;
-    height: 60px !important;
-  }
-
-  .step-number {
-    font-size: 1rem;
-    left: 0.25rem;
-  }
-
-  .process-step h3 {
-    font-size: 1.3rem;
-  }
-
-  /* Contact section */
-  #contact h2 {
-    font-size: 1.8rem;
-  }
-
-  .contact-form {
-    padding: 1.5rem;
-  }
-
-  .form-message {
-    bottom: -0.2rem;
-  }
-
-  .contact-form label {
-    font-size: 0.9rem;
-  }
-
-  .contact-form input,
-  .contact-form select,
-  .contact-form textarea {
-    font-size: 0.95rem;
-  }
-
-  .btn {
-    padding: 0.65rem 1.1rem;
-    font-size: 0.95rem;
-  }
-
-  /* Footer */
-  .site-footer {
-    font-size: 0.85rem;
-  }
-}
-
-/* Très petits mobiles (< 400px) */
-@media (max-width: 400px) {
-  :root {
-    font-size: 14px;
-  }
-
-  .hero-title {
-    font-size: 1.75rem;
-  }
-
-  .services-grid,
-  .process-grid {
-    gap: 1.5rem;
-  }
-
-  .service-card {
-    padding: 1rem;
-  }
-
-  .service-visual {
-    height: 140px;
-  }
-
-  .contact-form {
-    padding: 1.25rem;
-  }
-
-  .form-note {
-    font-size: 0.75rem;
-  }
-}
-
-/* Desktop large (> 1400px) */
-@media (min-width: 1400px) {
-  .services-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
-  }
-
-  .process-grid {
-    gap: 2rem;
-  }
-}
-
-/* Tablette portrait (600px - 900px) */
-@media (min-width: 600px) and (max-width: 900px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2.5rem;
-  }
-
-  .hero-title {
-    font-size: 3rem;
-  }
-}
-
-/* Protection navigation pour écrans moyens (900px - 1100px) */
-@media (min-width: 900px) and (max-width: 1100px) {
-  .nav {
-    max-width: calc(100vw - 4rem);
-  }
-
-  .nav a {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8rem;
-  }
-
-  .nav-cta {
-    padding-right: 0.5rem;
-  }
-}
-
-/* iPad Pro et tablettes (900px - 1400px) */
-@media (min-width: 900px) and (max-width: 1400px) {
-  .footer-content .logo {
-    margin-right: 15px;
   }
 }
 
