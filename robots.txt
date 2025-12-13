@@ -1,4 +1,6 @@
 # robots.txt pour EMKAI
+# https://www.emkai.fr/robots.txt
+
 User-agent: *
 Allow: /
 
@@ -8,7 +10,9 @@ Sitemap: https://www.emkai.fr/sitemap.xml
 # Bloquer les fichiers sensibles
 Disallow: /.git/
 Disallow: /.vscode/
-Disallow: /node_modules/
+Disallow: /.htaccess
+Disallow: /.env
 
-# Crawl-delay (optionnel, ajuster selon besoins)
-Crawl-delay: 1
+# Bloquer les fichiers de backup
+Disallow: /*.backup$
+Disallow: /*.bak$
