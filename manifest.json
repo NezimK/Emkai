@@ -1,0 +1,28 @@
+{
+  "name": "EMKAI - Agence d'automatisation et d'intégration IA Lille",
+  "short_name": "EMKAI",
+  "description": "Agence d'automatisation et d'intégration IA pour agences immobilières - Lille",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05060a",
+  "theme_color": "#05060a",
+  "orientation": "portrait-primary",
+  "lang": "fr",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "LESF.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "LESF.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "screenshots": []
+}

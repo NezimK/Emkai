@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page introuvable - EMKAI</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="https://www.emkai.fr/" />
+    <link rel="icon" type="image/png" sizes="32x32" href="LESF.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        font-size: 16px;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        color: #f5f2eb;
+        background-color: #05060a;
+        --primary: #c8a96b;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(circle at center, rgba(200, 169, 107, 0.05), transparent 70%);
+      }
+      .error-container {
+        text-align: center;
+        max-width: 600px;
+      }
+      .error-code {
+        font-size: 8rem;
+        font-weight: 700;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 1rem;
+        opacity: 0.3;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+      p {
+        font-size: 1.1rem;
+        color: rgba(245, 242, 235, 0.7);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+      .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(120deg, #c8a96b, #8a5e2e);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 999px;
+        font-weight: 600;
+        transition: transform 0.2s ease;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+      @media (max-width: 600px) {
+        .error-code {
+          font-size: 5rem;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+        p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-container">
+      <div class="error-code">404</div>
+      <h1>Page introuvable</h1>
+      <p>
+        Désolé, la page que vous recherchez n'existe pas ou a été déplacée.
+        Retournez à l'accueil pour découvrir nos solutions IA pour l'immobilier.
+      </p>
+      <a href="/" class="btn">Retour à l'accueil</a>
+    </div>
+  </body>
+</html>
