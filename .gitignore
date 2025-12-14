@@ -1,0 +1,29 @@
+# Fichiers de configuration serveur
+.htaccess
+.htpasswd
+
+# Fichiers système
+.DS_Store
+.vscode/
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.bak
+*.backup
+*.swp
+
+# Node modules (si applicable)
+node_modules/
+
+# Environnement
+.env
+.env.local
+.env.production
+
+# Documentation locale (optionnel - à commenter si vous voulez les garder)
+# START_HERE.md
+# OPTIMISATIONS_FINALES.md
+# README_SEO.md
+# SEO_CHECKLIST.md
+# LOCALISATION.md
