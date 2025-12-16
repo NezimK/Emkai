@@ -1,18 +1,20 @@
 # robots.txt pour EMKAI
-# https://www.emkai.fr/robots.txt
 
 User-agent: *
 Allow: /
-
-# Sitemap
-Sitemap: https://www.emkai.fr/sitemap.xml
 
 # Bloquer les fichiers sensibles
 Disallow: /.git/
 Disallow: /.vscode/
 Disallow: /.htaccess
 Disallow: /.env
-
-# Bloquer les fichiers de backup
 Disallow: /*.backup$
 Disallow: /*.bak$
+
+# Bloquer URLs suspectes (tentatives d'attaque)
+Disallow: /*404javascript*
+Disallow: /*404testpage*
+Disallow: /*eval(*
+Disallow: /*base64*
+
+Sitemap: https://www.emkai.fr/sitemap.xml
