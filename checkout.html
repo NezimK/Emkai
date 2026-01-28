@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/icons/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+
+    <!-- SEO Meta Tags -->
+    <title>Finaliser votre inscription - EMKAI | Immo Copilot</title>
+    <meta name="description" content="Finalisez votre inscription a Immo Copilot et commencez a automatiser votre premier contact immobilier." />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Checkout Page Specific Styles */
+      .checkout-page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .checkout-main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8rem 1.5rem 4rem;
+      }
+
+      .checkout-container {
+        width: 100%;
+        max-width: 900px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        align-items: start;
+      }
+
+      /* Plan Recap Card */
+      .plan-recap {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(200, 169, 107, 0.15);
+        border-radius: 20px;
+        padding: 2rem;
+        position: sticky;
+        top: 8rem;
+      }
+
+      .plan-recap-header {
+        text-align: center;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(200, 169, 107, 0.1);
+        margin-bottom: 1.5rem;
+      }
+
+      .plan-recap-header h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--primary);
+        margin: 0 0 0.5rem;
+      }
+
+      .plan-recap-price {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 0.25rem;
+      }
+
+      .plan-recap-price .amount {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #f5f2eb;
+      }
+
+      .plan-recap-price .currency {
+        font-size: 1.25rem;
+        color: var(--primary);
+      }
+
+      .plan-recap-price .period {
+        font-size: 0.9rem;
+        color: rgba(245, 242, 235, 0.5);
+        margin-left: 0.25rem;
+      }
+
+      .plan-recap-features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .plan-recap-features li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.6rem 0;
+        color: rgba(245, 242, 235, 0.85);
+        font-size: 0.9rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .plan-recap-features li:last-child {
+        border-bottom: none;
+      }
+
+      .plan-recap-features .check-icon {
+        width: 16px;
+        height: 16px;
+        color: var(--primary);
+        flex-shrink: 0;
+      }
+
+      /* Checkout Form */
+      .checkout-form-wrapper {
+        background: rgba(5, 7, 13, 0.75);
+        border: 1px solid rgba(200, 169, 107, 0.18);
+        border-radius: 24px;
+        padding: 2.5rem;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+      }
+
+      .checkout-form-wrapper h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem;
+        color: #f5f2eb;
+      }
+
+      .checkout-form-wrapper .subtitle {
+        color: rgba(245, 242, 235, 0.6);
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Account Type Selection */
+      .account-type-label {
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: rgba(245, 242, 235, 0.9);
+        margin-bottom: 0.75rem;
+      }
+
+      .account-type-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .account-type-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        padding: 1.25rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .account-type-card:hover {
+        border-color: rgba(200, 169, 107, 0.4);
+        background: rgba(200, 169, 107, 0.05);
+      }
+
+      .account-type-card.selected {
+        border-color: var(--primary);
+        background: rgba(200, 169, 107, 0.1);
+      }
+
+      .account-type-card input[type="radio"] {
+        display: none;
+      }
+
+      .account-type-card .icon {
+        font-size: 1.5rem;
+      }
+
+      .account-type-card .label {
+        font-weight: 500;
+        color: #f5f2eb;
+        font-size: 0.95rem;
+      }
+
+      .account-type-card.selected .label {
+        color: var(--primary);
+      }
+
+      /* Form Fields */
+      .checkout-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+
+      .checkout-form label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+        color: rgba(245, 242, 235, 0.9);
+      }
+
+      .checkout-form input {
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.06);
+        padding: 1rem;
+        color: #f5f2eb;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        outline: none;
+      }
+
+      .checkout-form input::placeholder {
+        color: rgba(248, 250, 252, 0.4);
+      }
+
+      .checkout-form input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(200, 169, 107, 0.1);
+      }
+
+      /* Submit Button */
+      .checkout-submit {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        margin-top: 0.5rem;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .checkout-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .checkout-submit .spinner {
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        display: none;
+      }
+
+      .checkout-submit.loading .spinner {
+        display: block;
+      }
+
+      .checkout-submit.loading .btn-text {
+        display: none;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* Trust Badges */
+      .trust-badges {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .trust-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: rgba(245, 242, 235, 0.5);
+        font-size: 0.8rem;
+      }
+
+      .trust-badge svg {
+        width: 14px;
+        height: 14px;
+        color: var(--primary);
+      }
+
+      /* CGV Link */
+      .cgv-notice {
+        text-align: center;
+        font-size: 0.8rem;
+        color: rgba(245, 242, 235, 0.5);
+        margin-top: 1rem;
+      }
+
+      .cgv-notice a {
+        color: var(--primary);
+        text-decoration: underline;
+      }
+
+      /* Error/Success Messages */
+      .checkout-message {
+        padding: 1rem;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        display: none;
+      }
+
+      .checkout-message.error {
+        display: block;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #f87171;
+      }
+
+      .checkout-message.canceled {
+        display: block;
+        background: rgba(251, 191, 36, 0.1);
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        color: #fbbf24;
+      }
+
+      /* Back Link */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba(245, 242, 235, 0.6);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        transition: color 0.2s ease;
+      }
+
+      .back-link:hover {
+        color: var(--primary);
+      }
+
+      .back-link svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* Responsive */
+      @media (max-width: 800px) {
+        .checkout-container {
+          grid-template-columns: 1fr;
+          max-width: 500px;
+        }
+
+        .plan-recap {
+          position: static;
+          order: -1;
+        }
+
+        .checkout-main {
+          padding: 7rem 1rem 3rem;
+        }
+
+        .checkout-form-wrapper {
+          padding: 2rem;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .account-type-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .checkout-form-wrapper {
+          padding: 1.5rem;
+        }
+
+        .trust-badges {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="checkout-page">
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container header-wrapper">
+        <a href="/" class="logo">
+          <span class="logo-text">EMKAI</span>
+        </a>
+        <nav class="nav" id="primary-nav" aria-label="Navigation principale">
+          <a href="/#services">Services</a>
+          <a href="/#process">Methode</a>
+          <a href="formules.html">Formules</a>
+          <a href="/#contact" class="nav-cta">Parlons-en <span class="nav-arrow" aria-hidden="true">-></span></a>
+        </nav>
+        <button class="nav-toggle" aria-label="Ouvrir le menu" id="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="checkout-main">
+      <div class="checkout-container">
+        <!-- Plan Recap -->
+        <div class="plan-recap" id="planRecap">
+          <div class="plan-recap-header">
+            <h2 id="planName">Chargement...</h2>
+            <div class="plan-recap-price">
+              <span class="amount" id="planPrice">-</span>
+              <span class="currency">EUR</span>
+              <span class="period">/mois</span>
+            </div>
+          </div>
+          <ul class="plan-recap-features" id="planFeatures">
+            <!-- Features loaded dynamically -->
+          </ul>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="checkout-form-wrapper">
+          <a href="formules.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Retour aux formules
+          </a>
+
+          <h1>Finalisez votre inscription</h1>
+          <p class="subtitle">Remplissez vos informations pour accéder à Immo Copilot</p>
+
+          <div id="checkoutMessage" class="checkout-message"></div>
+
+          <form id="checkoutForm" class="checkout-form">
+            <!-- Account Type -->
+            <div>
+              <span class="account-type-label">Type de compte</span>
+              <div class="account-type-grid">
+                <label class="account-type-card selected" id="agenceCard">
+                  <input type="radio" name="accountType" value="agence" checked />
+                  <span class="label">Agence</span>
+                </label>
+                <label class="account-type-card" id="independantCard">
+                  <input type="radio" name="accountType" value="independant" />
+                  <span class="label">Indépendant</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <label>
+              Email professionnel
+              <input
+                type="email"
+                name="email"
+                id="emailInput"
+                placeholder="exemple@agence.fr"
+                required
+                autocomplete="email"
+              />
+            </label>
+
+            <!-- Company Name -->
+            <label id="companyNameLabel">
+              Nom de votre agence
+              <input
+                type="text"
+                name="companyName"
+                id="companyNameInput"
+                placeholder="Immobilier Paris Centre"
+                required
+                autocomplete="organization"
+              />
+            </label>
+
+            <!-- Responsable Name (only for agencies) -->
+            <label id="responsableNameLabel">
+              Nom et Prénom
+              <input
+                type="text"
+                name="responsableName"
+                id="responsableNameInput"
+                placeholder="Jean Dupont"
+                required
+                autocomplete="name"
+              />
+            </label>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary checkout-submit" id="submitBtn">
+              <span class="btn-text">Procéder au paiement securisé</span>
+              <span class="spinner"></span>
+            </button>
+          </form>
+
+          <!-- Trust Badges -->
+          <div class="trust-badges">
+            <div class="trust-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Paiement securisé
+            </div>
+            <div class="trust-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              Données protégées
+            </div>
+            <div class="trust-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Sans engagement
+            </div>
+          </div>
+
+          <!-- CGV Notice -->
+          <p class="cgv-notice">
+            En continuant, vous acceptez nos <a href="cgv.html" target="_blank">Conditions Generales de Vente</a>
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="logo">
+            <a href="/" style="text-decoration: none; color: inherit;">
+              <span class="logo-text">EMKAI</span>
+            </a>
+          </div>
+          <nav class="footer-links">
+            <a href="mentions-legales.html">Mentions légales</a>
+            <a href="politique-confidentialite.html">Politique de confidentialité</a>
+            <a href="cgv.html">CGV</a>
+          </nav>
+        </div>
+        <p class="footer-note">
+          © <span id="current-year"></span> EMKAI - Agence d'automatisation et d'intégration IA | Lille, Hauts-de-France
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Plans data
+      const plans = {
+        essentiel: {
+          name: 'Essentiel',
+          price: 142,
+          features: [
+            '20 conversations/jour',
+            '3 utilisateurs',
+            'Support 6/7j',
+            'Synchronisation CRM',
+            'Gmail/Outlook + Calendar'
+          ]
+        },
+        avance: {
+          name: 'Avance',
+          price: 249,
+          features: [
+            '50 conversations/jour',
+            '6 utilisateurs',
+            'Support 6/7j',
+            'Synchronisation CRM',
+            'Gmail/Outlook + Calendar',
+            'Dashboard KPIs'
+          ]
+        },
+        premium: {
+          name: 'Premium',
+          price: 439,
+          features: [
+            '100 conversations/jour',
+            'Utilisateurs illimites',
+            'Support 7/7j (24/24)',
+            'Synchronisation CRM',
+            'Gmail/Outlook + Calendar',
+            'Dashboard KPIs',
+            'Support prioritaire'
+          ]
+        }
+      };
+
+      // Get plan from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const planId = urlParams.get('plan');
+      const canceled = urlParams.get('canceled');
+
+      // Check if valid plan
+      if (!planId || !plans[planId]) {
+        window.location.href = 'formules.html';
+      }
+
+      const plan = plans[planId];
+
+      // Display plan info
+      document.getElementById('planName').textContent = plan.name;
+      document.getElementById('planPrice').textContent = plan.price;
+
+      const featuresHtml = plan.features.map(feature => `
+        <li>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          ${feature}
+        </li>
+      `).join('');
+      document.getElementById('planFeatures').innerHTML = featuresHtml;
+
+      // Show canceled message if payment was canceled
+      if (canceled === 'true') {
+        const messageEl = document.getElementById('checkoutMessage');
+        messageEl.className = 'checkout-message canceled';
+        messageEl.textContent = 'Paiement annule. Vous pouvez reessayer quand vous le souhaitez.';
+      }
+
+      // Account type switching
+      const agenceCard = document.getElementById('agenceCard');
+      const independantCard = document.getElementById('independantCard');
+      const companyNameLabel = document.getElementById('companyNameLabel');
+      const companyNameInput = document.getElementById('companyNameInput');
+      const responsableNameLabel = document.getElementById('responsableNameLabel');
+      const responsableNameInput = document.getElementById('responsableNameInput');
+
+      function selectAccountType(type) {
+        if (type === 'agence') {
+          agenceCard.classList.add('selected');
+          independantCard.classList.remove('selected');
+          agenceCard.querySelector('input').checked = true;
+          companyNameLabel.childNodes[0].textContent = 'Nom de votre agence';
+          companyNameInput.placeholder = 'Immobilier Paris Centre';
+          companyNameInput.autocomplete = 'organization';
+          // Afficher le champ Nom et Prénom pour les agences
+          responsableNameLabel.style.display = 'flex';
+          responsableNameInput.required = true;
+        } else {
+          independantCard.classList.add('selected');
+          agenceCard.classList.remove('selected');
+          independantCard.querySelector('input').checked = true;
+          companyNameLabel.childNodes[0].textContent = 'Votre nom professionnel';
+          companyNameInput.placeholder = 'Jean Dupont';
+          companyNameInput.autocomplete = 'name';
+          // Masquer le champ Nom et Prénom pour les indépendants
+          responsableNameLabel.style.display = 'none';
+          responsableNameInput.required = false;
+          responsableNameInput.value = '';
+        }
+      }
+
+      agenceCard.addEventListener('click', () => selectAccountType('agence'));
+      independantCard.addEventListener('click', () => selectAccountType('independant'));
+
+      // Form submission
+      const form = document.getElementById('checkoutForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const messageEl = document.getElementById('checkoutMessage');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('emailInput').value.trim();
+        const companyName = document.getElementById('companyNameInput').value.trim();
+        const responsableName = document.getElementById('responsableNameInput').value.trim();
+        const accountType = document.querySelector('input[name="accountType"]:checked').value;
+
+        // Basic validation
+        if (!email || !companyName) {
+          messageEl.className = 'checkout-message error';
+          messageEl.textContent = 'Veuillez remplir tous les champs.';
+          return;
+        }
+
+        // Validation du nom et prénom pour les agences
+        if (accountType === 'agence' && !responsableName) {
+          messageEl.className = 'checkout-message error';
+          messageEl.textContent = 'Veuillez renseigner le nom et prénom du responsable.';
+          return;
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          messageEl.className = 'checkout-message error';
+          messageEl.textContent = 'Veuillez entrer une adresse email valide.';
+          return;
+        }
+
+        // Show loading state
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+        messageEl.style.display = 'none';
+
+        try {
+          // En local avec ngrok, remplacer par l'URL ngrok (ex: https://abc123.ngrok.io)
+          // En production, utiliser l'URL du backend déployé
+          const BACKEND_URL = 'http://localhost:3000'; // Changer pour ngrok en test
+
+          const response = await fetch(`${BACKEND_URL}/api/stripe/create-checkout-session`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email,
+              companyName,
+              responsableName: accountType === 'agence' ? responsableName : null,
+              accountType,
+              plan: planId
+            })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Une erreur est survenue');
+          }
+
+          // Redirect to Stripe Checkout
+          window.location.href = data.url;
+
+        } catch (error) {
+          console.error('Checkout error:', error);
+          messageEl.className = 'checkout-message error';
+          messageEl.textContent = error.message || 'Une erreur est survenue. Veuillez reessayer.';
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+        }
+      });
+
+      // Navigation mobile
+      document.getElementById("current-year").textContent = new Date().getFullYear();
+
+      const navToggle = document.getElementById("nav-toggle");
+      const primaryNav = document.getElementById("primary-nav");
+      if (navToggle && primaryNav) {
+        navToggle.addEventListener("click", () => {
+          primaryNav.classList.toggle("active");
+        });
+        primaryNav.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            primaryNav.classList.remove("active");
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

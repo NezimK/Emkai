@@ -180,6 +180,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Gestion des cartes FAQ Bento
+  const faqCards = document.querySelectorAll(".faq-card[data-faq]");
+  faqCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      const isActive = card.classList.contains("active");
+
+      // Fermer toutes les autres cartes
+      faqCards.forEach((otherCard) => {
+        otherCard.classList.remove("active");
+      });
+
+      // Ouvrir/fermer la carte cliquée
+      if (!isActive) {
+        card.classList.add("active");
+      }
+    });
+  });
+
   // Gestion du formulaire de contact
   const contactForm = document.getElementById("contact-form");
   const formMessage = document.getElementById("form-message");
@@ -234,3 +252,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
