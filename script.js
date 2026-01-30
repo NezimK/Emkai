@@ -198,6 +198,52 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Animated Counters for Impact Section
+  const counters = document.querySelectorAll('.counter');
+
+  if (counters.length > 0) {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.3
+    };
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+          const counter = entry.target;
+          const target = parseInt(counter.dataset.target);
+          const suffix = counter.dataset.suffix || '';
+          const duration = 2000;
+          const startTime = performance.now();
+
+          counter.classList.add('counted');
+
+          function updateCounter(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Easing function for smooth animation (easeOutQuart)
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const current = Math.floor(easeOutQuart * target);
+
+            counter.textContent = current.toLocaleString('fr-FR') + suffix;
+
+            if (progress < 1) {
+              requestAnimationFrame(updateCounter);
+            } else {
+              counter.classList.add('animated');
+            }
+          }
+
+          requestAnimationFrame(updateCounter);
+        }
+      });
+    }, observerOptions);
+
+    counters.forEach(counter => counterObserver.observe(counter));
+  }
+
   // Gestion du formulaire de contact
   const contactForm = document.getElementById("contact-form");
   const formMessage = document.getElementById("form-message");
