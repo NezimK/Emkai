@@ -738,6 +738,7 @@
           console.error('Checkout error:', error);
           messageEl.className = 'checkout-message error';
           messageEl.textContent = error.message || 'Une erreur est survenue. Veuillez reessayer.';
+          messageEl.style.display = 'block';
           submitBtn.classList.remove('loading');
           submitBtn.disabled = false;
         }
