@@ -1,6 +1,0 @@
-# robots.txt pour EMKAI
-
-User-agent: *
-Allow: /
-
-Sitemap: https://www.emkai.fr/sitemap.xml

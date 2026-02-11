@@ -81,6 +81,27 @@
     </style>
   </head>
   <body>
+    <header class="site-header">
+      <div class="container header-wrapper">
+        <a href="/" class="logo">
+          <span class="logo-text">EMKAI</span>
+        </a>
+        <nav class="nav" id="primary-nav" aria-label="Navigation principale">
+          <a href="immo-copilot.html" title="Découvrir Immo Copilot">Immo Copilot</a>
+          <a href="/#services" title="Découvrir nos services IA pour l'immobilier">Services</a>
+          <a href="/#process" title="Notre méthode de déploiement">Méthode</a>
+          <a href="formules.html" title="Découvrir nos formules et tarifs">Formules</a>
+          <a href="/#contact" class="nav-cta" title="Nous contacter pour discuter de votre projet">Parlons-en <span class="nav-arrow" aria-hidden="true">→</span></a>
+        </nav>
+        <a href="https://cal.com/ali-mekzine-efgebv/30min" target="_blank" rel="noopener noreferrer" class="demo-btn" title="Réserver une démonstration">Voir une démo</a>
+        <button class="nav-toggle" aria-label="Ouvrir le menu" id="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
     <main class="legal-page">
       <div class="container">
         <div class="legal-header">
@@ -271,6 +292,19 @@
 
     <script>
       document.getElementById("current-year").textContent = new Date().getFullYear();
+
+      const navToggle = document.getElementById("nav-toggle");
+      const primaryNav = document.getElementById("primary-nav");
+      if (navToggle && primaryNav) {
+        navToggle.addEventListener("click", () => {
+          primaryNav.classList.toggle("active");
+        });
+        primaryNav.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            primaryNav.classList.remove("active");
+          });
+        });
+      }
     </script>
   </body>
 </html>

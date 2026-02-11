@@ -2,7 +2,7 @@
 const canvas = document.getElementById("three-bg");
 
 if (!canvas) {
-  console.error('Canvas #three-bg introuvable');
+  // Pas de canvas Three.js sur cette page (normal pour les pages secondaires)
 } else if (typeof THREE === 'undefined') {
   console.error('Three.js n\'est pas chargé. Vérifiez que le CDN est accessible.');
   canvas.style.display = 'none';
@@ -124,7 +124,7 @@ if (!canvas) {
 document.addEventListener("DOMContentLoaded", () => {
   const navToggle = document.getElementById("nav-toggle");
   const primaryNav = document.getElementById("primary-nav");
-  const yearSpan = document.getElementById("current-year");
+  const yearSpan = document.getElementById("current-year") || document.getElementById("year");
   const logo = document.querySelector(".logo");
 
   // Navigation mobile
@@ -244,6 +244,59 @@ document.addEventListener("DOMContentLoaded", () => {
     counters.forEach(counter => counterObserver.observe(counter));
   }
 
+  // FAQ accordion avec boutons .faq-toggle (immo-copilot)
+  const faqToggles = document.querySelectorAll('.faq-toggle');
+  faqToggles.forEach(button => {
+    button.addEventListener('click', () => {
+      const card = button.closest('.faq-card');
+      const isOpen = card.classList.contains('active');
+
+      document.querySelectorAll('.faq-toggle').forEach(b => {
+        b.closest('.faq-card').classList.remove('active');
+        b.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        card.classList.add('active');
+        button.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Animated Counters for .impact-number[data-target] (immo-copilot)
+  const impactSection = document.querySelector('.impact-section');
+  if (impactSection) {
+    const impactNumbers = impactSection.querySelectorAll('.impact-number[data-target]');
+    if (impactNumbers.length > 0) {
+      const impactObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            impactNumbers.forEach(counter => {
+              const target = parseInt(counter.dataset.target);
+              const duration = 2000;
+              const step = target / (duration / 16);
+              let current = 0;
+
+              const updateCounter = () => {
+                current += step;
+                if (current < target) {
+                  counter.textContent = Math.floor(current).toLocaleString('fr-FR');
+                  requestAnimationFrame(updateCounter);
+                } else {
+                  counter.textContent = target.toLocaleString('fr-FR');
+                }
+              };
+              updateCounter();
+            });
+            impactObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      impactObserver.observe(impactSection);
+    }
+  }
+
   // Gestion du formulaire de contact
   const contactForm = document.getElementById("contact-form");
   const formMessage = document.getElementById("form-message");
@@ -255,17 +308,41 @@ document.addEventListener("DOMContentLoaded", () => {
       const submitButton = contactForm.querySelector('button[type="submit"]');
       const originalButtonText = submitButton.textContent;
 
+      // Honeypot anti-spam
+      if (contactForm.website && contactForm.website.value) {
+        formMessage.textContent = 'Merci. Votre demande a bien été prise en compte ✓';
+        formMessage.className = "form-message success";
+        return;
+      }
+
+      // Validation des champs
+      const email = contactForm.email.value.trim();
+      const nomPrenom = contactForm.nom_prenom.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!nomPrenom || nomPrenom.length < 2) {
+        formMessage.textContent = 'Veuillez entrer votre nom et prénom.';
+        formMessage.className = "form-message error";
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        formMessage.textContent = 'Veuillez entrer une adresse email valide.';
+        formMessage.className = "form-message error";
+        return;
+      }
+
       // Désactiver le bouton pendant l'envoi
       submitButton.disabled = true;
       submitButton.textContent = "Envoi en cours...";
 
       try {
         const formData = {
-          nom_prenom: contactForm.nom_prenom.value,
-          agence: contactForm.agence.value,
-          email: contactForm.email.value,
+          nom_prenom: nomPrenom,
+          agence: contactForm.agence.value.trim(),
+          email: email,
           service: contactForm.service.value,
-          objectif: contactForm.objectif.value,
+          objectif: contactForm.objectif.value.trim(),
           recipient_email: "alimekzine@emkai.fr",
           timestamp: new Date().toISOString()
         };
