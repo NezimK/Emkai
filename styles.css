@@ -407,6 +407,10 @@ h3 {
   position: relative;
 }
 
+#process {
+  padding: 11rem 0;
+}
+
 /* Separateurs dores entre sections */
 .impact-section,
 .mobile-section,
@@ -446,6 +450,12 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 4.5rem;
   margin-top: 2.5rem;
+}
+
+.service-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: contents;
 }
 
 .service-card {
@@ -1635,7 +1645,7 @@ h3 {
 
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   align-items: stretch;
 }
@@ -1791,6 +1801,155 @@ h3 {
   color: rgba(245, 242, 235, 0.5);
 }
 
+/* Value Anchor Block */
+.pricing-value-anchor {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 1.5rem 2rem;
+  background: rgba(200, 169, 107, 0.06);
+  border: 1px solid rgba(200, 169, 107, 0.15);
+  border-radius: 12px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pricing-value-anchor p {
+  font-size: 1.1rem;
+  color: rgba(245, 242, 235, 0.85);
+  line-height: 1.6;
+  margin: 0;
+}
+.pricing-value-anchor strong {
+  color: var(--primary);
+}
+
+/* Custom Banner (Sur-mesure) */
+.pricing-custom-banner {
+  margin-top: 2.5rem;
+  padding: 2rem 2.5rem;
+  background: rgba(200, 169, 107, 0.04);
+  border: 1px solid rgba(200, 169, 107, 0.12);
+  border-radius: 16px;
+}
+.pricing-custom-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.pricing-custom-banner h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f5f2eb;
+  margin-bottom: 0.5rem;
+}
+.pricing-custom-banner p {
+  font-size: 0.95rem;
+  color: rgba(245, 242, 235, 0.65);
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .pricing-custom-banner-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Engagement Badge */
+.pricing-engagement-badge {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.5rem;
+  display: inline-block;
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary);
+  opacity: 0.8;
+}
+
+/* Comparison Section (Immo Copilot) */
+.comparison-section {
+  padding: 5rem 0;
+  background: var(--dark);
+}
+.comparison-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 3rem;
+}
+.comparison-section .eyebrow {
+  text-align: center;
+}
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.comparison-column {
+  padding: 2.5rem;
+  border-radius: 16px;
+}
+.comparison-without {
+  background: rgba(200, 50, 50, 0.04);
+  border: 1px solid rgba(200, 50, 50, 0.15);
+}
+.comparison-with {
+  background: rgba(200, 169, 107, 0.06);
+  border: 1px solid rgba(200, 169, 107, 0.2);
+}
+.comparison-column h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #f5f2eb;
+}
+.comparison-without h3 {
+  color: rgba(245, 242, 235, 0.6);
+}
+.comparison-with h3 {
+  color: var(--primary);
+}
+.comparison-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.comparison-column li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: rgba(245, 242, 235, 0.8);
+  line-height: 1.5;
+}
+.comparison-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.comparison-icon-bad {
+  color: rgba(220, 80, 80, 0.7);
+}
+.comparison-icon-good {
+  color: var(--primary);
+}
+.comparison-column li strong {
+  color: #f5f2eb;
+}
+@media (max-width: 600px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Footer Section */
 .pricing-footer-section {
   padding: 2rem 0 6rem;
@@ -1891,9 +2050,15 @@ h3 {
    LOGOS MARQUEE - Carrousel de partenaires
    ================================================ */
 
-.logos-marquee {
-  padding: 3rem 0;
+.logos-title-wrapper {
   background: var(--dark);
+  padding: 3rem 0 0;
+  text-align: center;
+}
+
+.logos-marquee {
+  padding: 2rem 0 3rem;
+  background: transparent;
   overflow: hidden;
 }
 
@@ -1908,11 +2073,11 @@ h3 {
 }
 
 .marquee-container {
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto;
   overflow: hidden;
-  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
 
 .marquee-track {
@@ -2019,7 +2184,7 @@ h3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  margin-bottom: 4rem;
+  margin-bottom: 1.5rem;
 }
 
 .impact-card {
@@ -2090,7 +2255,6 @@ h3 {
 .impact-cta {
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid rgba(200, 169, 107, 0.1);
 }
 
 .impact-conclusion {
@@ -2186,7 +2350,7 @@ h3 {
    ================================================ */
 
 .mobile-section {
-  padding: 8rem 0;
+  padding: 11rem 0;
   background: transparent;
   position: relative;
   overflow: hidden;
@@ -2541,7 +2705,7 @@ h3 {
   min-height: 80vh;
   display: flex;
   align-items: center;
-  padding: 10rem 0 6rem;
+  padding: 16rem 0 7rem;
   text-align: center;
   background: linear-gradient(180deg, var(--dark) 0%, rgba(5, 6, 10, 0.98) 100%);
 }
@@ -2601,6 +2765,7 @@ h3 {
   font-size: 1.25rem;
   color: var(--muted);
   margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .impact-conclusion strong {
@@ -2645,84 +2810,65 @@ h3 {
   text-align: center;
 }
 
-.features-bento {
+.features-grid-3 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
-.feature-card {
+.feature-card-v2 {
   background: rgba(200, 169, 107, 0.04);
-  border: 1px solid rgba(200, 169, 107, 0.20);
+  border: 1px solid rgba(200, 169, 107, 0.15);
   border-radius: 20px;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.feature-card:hover {
-  border-color: rgba(200, 169, 107, 0.35);
+.feature-card-v2:hover {
+  border-color: rgba(200, 169, 107, 0.4);
   transform: translateY(-6px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  background: rgba(200, 169, 107, 0.07);
 }
 
-.feature-large {
-  grid-column: span 2;
-}
-
-.feature-small {
-  grid-column: span 1;
-}
-
-.feature-icon {
-  width: 48px;
-  height: 48px;
+.feature-card-v2-icon {
+  width: 52px;
+  height: 52px;
   color: var(--primary);
   margin-bottom: 1.5rem;
+  background: rgba(200, 169, 107, 0.08);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
 }
 
-.feature-icon svg {
+.feature-card-v2-icon svg {
   width: 100%;
   height: 100%;
 }
 
-.feature-icon-small {
-  width: 32px;
-  height: 32px;
-  color: var(--primary);
-  margin-bottom: 1rem;
-}
-
-.feature-icon-small svg {
-  width: 100%;
-  height: 100%;
-}
-
-.feature-card h3 {
-  font-size: 1.25rem;
+.feature-card-v2 h3 {
+  font-size: 1.15rem;
   font-weight: 600;
   margin: 0 0 0.75rem;
 }
 
-.feature-card h4 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem;
-}
-
-.feature-card p {
+.feature-card-v2 p {
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1.6;
   margin: 0;
 }
 
-.feature-small p {
-  font-size: 0.85rem;
-}
-
 /* Workflow Section */
 .workflow-section {
-  padding: 8rem 0;
+  padding: 5rem 0;
   background: linear-gradient(180deg, rgba(5, 6, 10, 0.95) 0%, var(--dark) 100%);
 }
 
@@ -2806,18 +2952,12 @@ h3 {
   margin-bottom: 4rem;
 }
 
-.integrations-marquee .marquee-container {
-  max-width: 1200px !important;
-  width: 100% !important;
-  margin: 0 auto !important;
-  overflow: hidden;
-}
 
 .integrations-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.25rem;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
@@ -2838,7 +2978,7 @@ h3 {
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -2860,7 +3000,7 @@ h3 {
 
 .integration-note {
   text-align: center;
-  margin-top: 0.5rem;
+  margin-top: 0;
   color: var(--primary);
   font-size: 0.85rem;
   font-style: italic;
@@ -2870,7 +3010,7 @@ h3 {
   display: block;
   font-size: 1.2rem;
   font-style: normal;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.15rem;
   animation: arrowBounce 1.5s ease-in-out infinite;
 }
 
@@ -3057,6 +3197,7 @@ h3 {
 .btn-large {
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
+  margin-top: 2.5rem;
 }
 
 /* FAQ Section */
@@ -3154,14 +3295,16 @@ h3 {
 /* Final CTA Section */
 .final-cta-section {
   padding: 8rem 0;
-  background: linear-gradient(135deg, rgba(200, 169, 107, 0.08) 0%, var(--dark) 100%);
+  background: black;
   text-align: center;
+  border-top: 1px solid rgba(200, 169, 107, 0.12);
+  border-bottom: 1px solid rgba(200, 169, 107, 0.12);
 }
 
 .final-cta-section h2 {
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 600;
-  margin: 0 0 1rem;
+  margin: 0 0 2rem;
 }
 
 .final-cta-section > .container > p {
@@ -3201,12 +3344,8 @@ h3 {
 
 /* Responsive - Immo Copilot Page */
 @media (max-width: 1100px) {
-  .features-bento {
+  .features-grid-3 {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .feature-large {
-    grid-column: span 1;
   }
 
   .integrations-grid {
@@ -3248,13 +3387,8 @@ h3 {
     min-height: auto;
   }
 
-  .features-bento {
+  .features-grid-3 {
     grid-template-columns: 1fr;
-  }
-
-  .feature-large,
-  .feature-small {
-    grid-column: span 1;
   }
 
   .integrations-grid {

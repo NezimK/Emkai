@@ -9,8 +9,8 @@
     <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
 
     <!-- SEO Meta Tags -->
-    <title>Finaliser votre inscription - EMKAI | Immo Copilot</title>
-    <meta name="description" content="Finalisez votre inscription a Immo Copilot et commencez a automatiser votre premier contact immobilier." />
+    <title>Bientôt disponible - EMKAI | Immo Copilot</title>
+    <meta name="description" content="Immo Copilot arrive bientôt. Rejoignez la liste d'attente pour être parmi les premiers à en profiter." />
     <meta name="robots" content="noindex, nofollow" />
 
     <!-- Fonts & Styles -->
@@ -19,7 +19,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <style>
-      /* Checkout Page Specific Styles */
       .checkout-page {
         min-height: 100vh;
         display: flex;
@@ -34,110 +33,95 @@
         padding: 8rem 1.5rem 4rem;
       }
 
-      .checkout-container {
+      .waitlist-container {
         width: 100%;
-        max-width: 900px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2.5rem;
-        align-items: start;
-      }
-
-      /* Plan Recap Card */
-      .plan-recap {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(200, 169, 107, 0.15);
-        border-radius: 20px;
-        padding: 2rem;
-        position: sticky;
-        top: 8rem;
-      }
-
-      .plan-recap-header {
+        max-width: 560px;
         text-align: center;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid rgba(200, 169, 107, 0.1);
-        margin-bottom: 1.5rem;
       }
 
-      .plan-recap-header h2 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--primary);
-        margin: 0 0 0.5rem;
-      }
-
-      .plan-recap-price {
-        display: flex;
-        align-items: baseline;
-        justify-content: center;
-        gap: 0.25rem;
-      }
-
-      .plan-recap-price .amount {
-        font-size: 2.5rem;
-        font-weight: 600;
-        color: #f5f2eb;
-      }
-
-      .plan-recap-price .currency {
-        font-size: 1.25rem;
-        color: var(--primary);
-      }
-
-      .plan-recap-price .period {
-        font-size: 0.9rem;
-        color: rgba(245, 242, 235, 0.5);
-        margin-left: 0.25rem;
-      }
-
-      .plan-recap-features {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .plan-recap-features li {
-        display: flex;
+      .waitlist-badge {
+        display: inline-flex;
         align-items: center;
-        gap: 0.75rem;
-        padding: 0.6rem 0;
-        color: rgba(245, 242, 235, 0.85);
-        font-size: 0.9rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        gap: 0.5rem;
+        background: rgba(200, 169, 107, 0.1);
+        border: 1px solid rgba(200, 169, 107, 0.25);
+        border-radius: 100px;
+        padding: 0.5rem 1.25rem;
+        font-size: 0.85rem;
+        color: var(--primary);
+        font-weight: 500;
+        margin-bottom: 2rem;
       }
 
-      .plan-recap-features li:last-child {
-        border-bottom: none;
-      }
-
-      .plan-recap-features .check-icon {
+      .waitlist-badge svg {
         width: 16px;
         height: 16px;
-        color: var(--primary);
-        flex-shrink: 0;
       }
 
-      /* Checkout Form */
-      .checkout-form-wrapper {
-        background: rgba(5, 7, 13, 0.75);
+      .waitlist-plan {
+        font-size: 0.95rem;
+        color: var(--primary);
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+      }
+
+      .waitlist-container h1 {
+        font-size: clamp(2rem, 5vw, 2.8rem);
+        font-weight: 600;
+        color: #f5f2eb;
+        margin: 0 0 1rem;
+        line-height: 1.2;
+      }
+
+      .waitlist-container .subtitle {
+        color: rgba(245, 242, 235, 0.65);
+        font-size: 1.05rem;
+        line-height: 1.6;
+        margin-bottom: 2.5rem;
+      }
+
+      /* Form Card */
+      .waitlist-form-card {
+        background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(200, 169, 107, 0.18);
         border-radius: 24px;
         padding: 2.5rem;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+        text-align: left;
       }
 
-      .checkout-form-wrapper h1 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin: 0 0 0.5rem;
-        color: #f5f2eb;
+      .waitlist-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
       }
 
-      .checkout-form-wrapper .subtitle {
-        color: rgba(245, 242, 235, 0.6);
+      .waitlist-form label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
         font-size: 0.95rem;
-        margin-bottom: 2rem;
+        color: rgba(245, 242, 235, 0.9);
+      }
+
+      .waitlist-form input {
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.06);
+        padding: 1rem;
+        color: #f5f2eb;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        outline: none;
+      }
+
+      .waitlist-form input::placeholder {
+        color: rgba(248, 250, 252, 0.4);
+      }
+
+      .waitlist-form input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(200, 169, 107, 0.1);
       }
 
       /* Account Type Selection */
@@ -153,7 +137,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0.25rem;
       }
 
       .account-type-card {
@@ -182,10 +166,6 @@
         display: none;
       }
 
-      .account-type-card .icon {
-        font-size: 1.5rem;
-      }
-
       .account-type-card .label {
         font-weight: 500;
         color: #f5f2eb;
@@ -196,44 +176,7 @@
         color: var(--primary);
       }
 
-      /* Form Fields */
-      .checkout-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-      }
-
-      .checkout-form label {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        font-size: 0.95rem;
-        color: rgba(245, 242, 235, 0.9);
-      }
-
-      .checkout-form input {
-        border-radius: 14px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        background: rgba(255, 255, 255, 0.06);
-        padding: 1rem;
-        color: #f5f2eb;
-        font-family: inherit;
-        font-size: 1rem;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        outline: none;
-      }
-
-      .checkout-form input::placeholder {
-        color: rgba(248, 250, 252, 0.4);
-      }
-
-      .checkout-form input:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(200, 169, 107, 0.1);
-      }
-
-      /* Submit Button */
-      .checkout-submit {
+      .waitlist-submit {
         width: 100%;
         padding: 1rem 1.5rem;
         margin-top: 0.5rem;
@@ -244,13 +187,13 @@
         gap: 0.5rem;
       }
 
-      .checkout-submit:disabled {
+      .waitlist-submit:disabled {
         opacity: 0.6;
         cursor: not-allowed;
         transform: none !important;
       }
 
-      .checkout-submit .spinner {
+      .waitlist-submit .spinner {
         width: 18px;
         height: 18px;
         border: 2px solid rgba(255, 255, 255, 0.3);
@@ -260,11 +203,11 @@
         display: none;
       }
 
-      .checkout-submit.loading .spinner {
+      .waitlist-submit.loading .spinner {
         display: block;
       }
 
-      .checkout-submit.loading .btn-text {
+      .waitlist-submit.loading .btn-text {
         display: none;
       }
 
@@ -272,46 +215,8 @@
         to { transform: rotate(360deg); }
       }
 
-      /* Trust Badges */
-      .trust-badges {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-      }
-
-      .trust-badge {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-        color: rgba(245, 242, 235, 0.5);
-        font-size: 0.8rem;
-      }
-
-      .trust-badge svg {
-        width: 14px;
-        height: 14px;
-        color: var(--primary);
-      }
-
-      /* CGV Link */
-      .cgv-notice {
-        text-align: center;
-        font-size: 0.8rem;
-        color: rgba(245, 242, 235, 0.5);
-        margin-top: 1rem;
-      }
-
-      .cgv-notice a {
-        color: var(--primary);
-        text-decoration: underline;
-      }
-
-      /* Error/Success Messages */
-      .checkout-message {
+      /* Messages */
+      .waitlist-message {
         padding: 1rem;
         border-radius: 12px;
         font-size: 0.9rem;
@@ -319,21 +224,69 @@
         display: none;
       }
 
-      .checkout-message.error {
+      .waitlist-message.error {
         display: block;
         background: rgba(239, 68, 68, 0.1);
         border: 1px solid rgba(239, 68, 68, 0.3);
         color: #f87171;
       }
 
-      .checkout-message.canceled {
+      .waitlist-message.success {
         display: block;
-        background: rgba(251, 191, 36, 0.1);
-        border: 1px solid rgba(251, 191, 36, 0.3);
-        color: #fbbf24;
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        color: #4ade80;
       }
 
-      /* Back Link */
+      /* Success State */
+      .waitlist-success {
+        display: none;
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      .waitlist-success.visible {
+        display: block;
+      }
+
+      .waitlist-success-icon {
+        width: 64px;
+        height: 64px;
+        background: rgba(200, 169, 107, 0.1);
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+      }
+
+      .waitlist-success-icon svg {
+        width: 32px;
+        height: 32px;
+        color: var(--primary);
+      }
+
+      .waitlist-success h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #f5f2eb;
+        margin: 0 0 0.75rem;
+      }
+
+      .waitlist-success p {
+        color: rgba(245, 242, 235, 0.65);
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      .waitlist-note {
+        text-align: center;
+        font-size: 0.85rem;
+        color: rgba(245, 242, 235, 0.45);
+        margin-top: 1.25rem;
+      }
+
       .back-link {
         display: inline-flex;
         align-items: center;
@@ -354,38 +307,17 @@
       }
 
       /* Responsive */
-      @media (max-width: 800px) {
-        .checkout-container {
-          grid-template-columns: 1fr;
-          max-width: 500px;
-        }
-
-        .plan-recap {
-          position: static;
-          order: -1;
-        }
-
+      @media (max-width: 600px) {
         .checkout-main {
           padding: 7rem 1rem 3rem;
         }
 
-        .checkout-form-wrapper {
-          padding: 2rem;
-        }
-      }
-
-      @media (max-width: 500px) {
-        .account-type-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .checkout-form-wrapper {
+        .waitlist-form-card {
           padding: 1.5rem;
         }
 
-        .trust-badges {
-          flex-direction: column;
-          gap: 0.75rem;
+        .account-type-grid {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -398,13 +330,12 @@
           <span class="logo-text">EMKAI</span>
         </a>
         <nav class="nav" id="primary-nav" aria-label="Navigation principale">
+          <a href="/#impact" title="Comprendre l'impact du manque de réactivité">Pourquoi Emkai</a>
           <a href="immo-copilot.html" title="Découvrir Immo Copilot">Immo Copilot</a>
-          <a href="/#services" title="Découvrir nos services IA pour l'immobilier">Services</a>
-          <a href="/#process" title="Notre méthode de déploiement">Méthode</a>
-          <a href="formules.html" title="Découvrir nos formules et tarifs">Formules</a>
-          <a href="/#contact" class="nav-cta" title="Nous contacter pour discuter de votre projet">Parlons-en <span class="nav-arrow" aria-hidden="true">→</span></a>
+          <a href="formules.html" title="Découvrir nos tarifs">Tarifs</a>
+          <a href="/#contact" class="nav-cta" title="Discutons de votre projet">Parlons-en <span class="nav-arrow" aria-hidden="true">→</span></a>
         </nav>
-        <a href="https://cal.com/ali-mekzine-efgebv/30min" target="_blank" rel="noopener noreferrer" class="demo-btn" title="Réserver une démonstration">Voir une démo</a>
+        <a href="https://cal.com/ali-mekzine-efgebv/30min" target="_blank" rel="noopener noreferrer" class="demo-btn" title="Réserver une démonstration personnalisée">Réserver ma démo</a>
         <button class="nav-toggle" aria-label="Ouvrir le menu" id="nav-toggle">
           <span></span>
           <span></span>
@@ -414,24 +345,20 @@
     </header>
 
     <main class="checkout-main">
-      <div class="checkout-container">
-        <!-- Plan Recap -->
-        <div class="plan-recap" id="planRecap">
-          <div class="plan-recap-header">
-            <h2 id="planName">Chargement...</h2>
-            <div class="plan-recap-price">
-              <span class="amount" id="planPrice">-</span>
-              <span class="currency">EUR</span>
-              <span class="period">/mois</span>
-            </div>
-          </div>
-          <ul class="plan-recap-features" id="planFeatures">
-            <!-- Features loaded dynamically -->
-          </ul>
-        </div>
+      <div class="waitlist-container">
+        <span class="waitlist-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Lancement imminent
+        </span>
 
-        <!-- Checkout Form -->
-        <div class="checkout-form-wrapper">
+        <p class="waitlist-plan" id="planLabel"></p>
+        <h1>Immo Copilot arrive bientôt</h1>
+        <p class="subtitle">Nous peaufinons les derniers détails. Rejoignez la liste d'attente pour être notifié dès l'ouverture et bénéficier d'un accès prioritaire.</p>
+
+        <div class="waitlist-form-card">
           <a href="formules.html" class="back-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -439,12 +366,10 @@
             Retour aux formules
           </a>
 
-          <h1>Finalisez votre inscription</h1>
-          <p class="subtitle">Remplissez vos informations pour accéder à Immo Copilot</p>
+          <div id="waitlistMessage" class="waitlist-message"></div>
 
-          <div id="checkoutMessage" class="checkout-message"></div>
-
-          <form id="checkoutForm" class="checkout-form">
+          <!-- Form -->
+          <form id="waitlistForm" class="waitlist-form">
             <!-- Account Type -->
             <div>
               <span class="account-type-label">Type de compte</span>
@@ -486,7 +411,7 @@
               />
             </label>
 
-            <!-- Responsable Name (only for agencies) -->
+            <!-- Responsable Name -->
             <label id="responsableNameLabel">
               Nom et Prénom
               <input
@@ -500,39 +425,24 @@
             </label>
 
             <!-- Submit -->
-            <button type="submit" class="btn btn-primary checkout-submit" id="submitBtn">
-              <span class="btn-text">Procéder au paiement securisé</span>
+            <button type="submit" class="btn btn-primary waitlist-submit" id="submitBtn">
+              <span class="btn-text">Rejoindre la liste d'attente</span>
               <span class="spinner"></span>
             </button>
           </form>
 
-          <!-- Trust Badges -->
-          <div class="trust-badges">
-            <div class="trust-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-              Paiement securisé
-            </div>
-            <div class="trust-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-              Données protégées
-            </div>
-            <div class="trust-badge">
+          <!-- Success State -->
+          <div class="waitlist-success" id="waitlistSuccess">
+            <div class="waitlist-success-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
-              Sans engagement
             </div>
+            <h2>Vous êtes sur la liste !</h2>
+            <p>Nous vous contacterons dès qu'Immo Copilot sera disponible. Vous bénéficierez d'un accès prioritaire.</p>
           </div>
 
-          <!-- CGV Notice -->
-          <p class="cgv-notice">
-            En continuant, vous acceptez nos <a href="cgv.html" target="_blank">Conditions Generales de Vente</a>
-          </p>
+          <p class="waitlist-note">Aucun paiement requis. Nous vous contacterons dès le lancement.</p>
         </div>
       </div>
     </main>
@@ -561,75 +471,19 @@
     <script>
       // Plans data
       const plans = {
-        essentiel: {
-          name: 'Essentiel',
-          price: 142,
-          features: [
-            '20 conversations/jour',
-            '3 utilisateurs',
-            'Support 6/7j',
-            'Synchronisation CRM',
-            'Gmail/Outlook + Calendar'
-          ]
-        },
-        avance: {
-          name: 'Avance',
-          price: 249,
-          features: [
-            '50 conversations/jour',
-            '6 utilisateurs',
-            'Support 6/7j',
-            'Synchronisation CRM',
-            'Gmail/Outlook + Calendar',
-            'Dashboard KPIs'
-          ]
-        },
-        premium: {
-          name: 'Premium',
-          price: 439,
-          features: [
-            '100 conversations/jour',
-            'Utilisateurs illimites',
-            'Support 7/7j (24/24)',
-            'Synchronisation CRM',
-            'Gmail/Outlook + Calendar',
-            'Dashboard KPIs',
-            'Support prioritaire'
-          ]
-        }
+        essentiel: { name: 'Essentiel', price: 142 },
+        avance: { name: 'Avancé', price: 249 },
+        premium: { name: 'Premium', price: 439 }
       };
 
       // Get plan from URL
       const urlParams = new URLSearchParams(window.location.search);
       const planId = urlParams.get('plan');
-      const canceled = urlParams.get('canceled');
 
-      // Check if valid plan
-      if (!planId || !plans[planId]) {
-        window.location.href = 'formules.html';
-      }
-
-      const plan = plans[planId];
-
-      // Display plan info
-      document.getElementById('planName').textContent = plan.name;
-      document.getElementById('planPrice').textContent = plan.price;
-
-      const featuresHtml = plan.features.map(feature => `
-        <li>
-          <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          ${feature}
-        </li>
-      `).join('');
-      document.getElementById('planFeatures').innerHTML = featuresHtml;
-
-      // Show canceled message if payment was canceled
-      if (canceled === 'true') {
-        const messageEl = document.getElementById('checkoutMessage');
-        messageEl.className = 'checkout-message canceled';
-        messageEl.textContent = 'Paiement annule. Vous pouvez reessayer quand vous le souhaitez.';
+      // Show plan label if valid
+      const planLabel = document.getElementById('planLabel');
+      if (planId && plans[planId]) {
+        planLabel.textContent = `Formule ${plans[planId].name} — ${plans[planId].price} €/mois`;
       }
 
       // Account type switching
@@ -648,7 +502,6 @@
           companyNameLabel.childNodes[0].textContent = 'Nom de votre agence';
           companyNameInput.placeholder = 'Immobilier Paris Centre';
           companyNameInput.autocomplete = 'organization';
-          // Afficher le champ Nom et Prénom pour les agences
           responsableNameLabel.style.display = 'flex';
           responsableNameInput.required = true;
         } else {
@@ -658,7 +511,6 @@
           companyNameLabel.childNodes[0].textContent = 'Votre nom professionnel';
           companyNameInput.placeholder = 'Jean Dupont';
           companyNameInput.autocomplete = 'name';
-          // Masquer le champ Nom et Prénom pour les indépendants
           responsableNameLabel.style.display = 'none';
           responsableNameInput.required = false;
           responsableNameInput.value = '';
@@ -669,9 +521,9 @@
       independantCard.addEventListener('click', () => selectAccountType('independant'));
 
       // Form submission
-      const form = document.getElementById('checkoutForm');
+      const form = document.getElementById('waitlistForm');
       const submitBtn = document.getElementById('submitBtn');
-      const messageEl = document.getElementById('checkoutMessage');
+      const messageEl = document.getElementById('waitlistMessage');
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -681,65 +533,64 @@
         const responsableName = document.getElementById('responsableNameInput').value.trim();
         const accountType = document.querySelector('input[name="accountType"]:checked').value;
 
-        // Basic validation
+        // Validation
         if (!email || !companyName) {
-          messageEl.className = 'checkout-message error';
+          messageEl.className = 'waitlist-message error';
           messageEl.textContent = 'Veuillez remplir tous les champs.';
           return;
         }
 
-        // Validation du nom et prénom pour les agences
         if (accountType === 'agence' && !responsableName) {
-          messageEl.className = 'checkout-message error';
+          messageEl.className = 'waitlist-message error';
           messageEl.textContent = 'Veuillez renseigner le nom et prénom du responsable.';
           return;
         }
 
-        // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-          messageEl.className = 'checkout-message error';
+          messageEl.className = 'waitlist-message error';
           messageEl.textContent = 'Veuillez entrer une adresse email valide.';
           return;
         }
 
-        // Show loading state
+        // Loading
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
         messageEl.style.display = 'none';
 
         try {
-          // En local avec ngrok, remplacer par l'URL ngrok (ex: https://abc123.ngrok.io)
-          // En production, utiliser l'URL du backend déployé
-          const BACKEND_URL = 'http://localhost:3000'; // Changer pour ngrok en test
+          // Send to Supabase waitlist table
+          const SUPABASE_URL = 'https://yptvhkmkmjasronywviq.supabase.co';
+          const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwdHZoa21rbWphc3Jvbnl3dmlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0NjQzMTYsImV4cCI6MjA1MzA0MDMxNn0.zI0TFp7OdQi5O-CYSZGYDqsPIXbKkxWYj7hIzVfV1xA';
 
-          const response = await fetch(`${BACKEND_URL}/api/stripe/create-checkout-session`, {
+          const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Prefer': 'return=minimal'
             },
             body: JSON.stringify({
               email,
-              companyName,
-              responsableName: accountType === 'agence' ? responsableName : null,
-              accountType,
-              plan: planId
+              company_name: companyName,
+              responsable_name: accountType === 'agence' ? responsableName : null,
+              account_type: accountType,
+              plan: planId || null
             })
           });
 
-          const data = await response.json();
-
           if (!response.ok) {
-            throw new Error(data.error || 'Une erreur est survenue');
+            throw new Error('Erreur lors de l\'inscription');
           }
 
-          // Redirect to Stripe Checkout
-          window.location.href = data.url;
+          // Show success
+          form.style.display = 'none';
+          document.getElementById('waitlistSuccess').classList.add('visible');
 
         } catch (error) {
-          console.error('Checkout error:', error);
-          messageEl.className = 'checkout-message error';
-          messageEl.textContent = error.message || 'Une erreur est survenue. Veuillez reessayer.';
+          messageEl.className = 'waitlist-message error';
+          messageEl.textContent = 'Une erreur est survenue. Veuillez réessayer.';
           messageEl.style.display = 'block';
           submitBtn.classList.remove('loading');
           submitBtn.disabled = false;
