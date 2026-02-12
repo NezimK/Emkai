@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon (priorité haute pour Google) -->
+    <link rel="icon" href="/icons/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icons/favicon.ico" type="image/x-icon" />
+
+    <!-- SEO Meta Tags -->
+    <title>Contact - EMKAI | Discuter de votre projet IA immobilier</title>
+    <meta name="description" content="Contactez EMKAI pour discuter de votre projet d'automatisation IA pour l'immobilier. Audit, Immo Copilot ou solutions sur mesure." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.emkai.fr/contact" />
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-wrapper">
+        <a href="/" class="logo">
+          <span class="logo-text">EMKAI</span>
+        </a>
+        <nav class="nav" id="primary-nav" aria-label="Navigation principale">
+          <a href="/impact" title="Comprendre l'impact du manque de réactivité">Pourquoi Emkai</a>
+          <a href="/immo-copilot" title="Découvrir Immo Copilot">Immo Copilot</a>
+          <a href="/formules" title="Découvrir nos tarifs">Tarifs</a>
+          <a href="/contact" class="nav-cta nav-active" title="Discutons de votre projet">Parlons-en <span class="nav-arrow" aria-hidden="true">→</span></a>
+        </nav>
+        <a href="https://cal.com/ali-mekzine-efgebv/30min" target="_blank" rel="noopener noreferrer" class="demo-btn" title="Réserver une démonstration personnalisée">Réserver ma démo</a>
+        <button class="nav-toggle" aria-label="Ouvrir le menu" id="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section id="contact" class="section section-dark" style="padding-top: 8rem;">
+        <div class="container">
+          <h2>Discuter de mon projet</h2>
+          <form class="contact-form" id="contact-form">
+            <div class="form-row">
+              <label>
+                Nom & Prénom
+                <input type="text" name="nom_prenom" placeholder="Nom prénom" required />
+              </label>
+              <label>
+                Agence
+                <input type="text" name="agence" placeholder="Agence" required />
+              </label>
+            </div>
+            <label>
+              Email professionnel
+              <input type="email" name="email" placeholder="email@agence.fr" required />
+            </label>
+            <label>
+              Par quel service êtes-vous intéressé ?
+              <select name="service" required>
+                <option value="" disabled selected>Sélectionnez un service</option>
+                <option value="audit">Audit</option>
+                <option value="immo-copilot">Immo Copilot</option>
+                <option value="solutions-sur-mesure">Solutions sur mesure</option>
+              </select>
+            </label>
+            <label>
+              Objectif principal
+              <textarea name="objectif" rows="4" placeholder="Décrivez vos priorités" required></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary">
+              Envoyer
+            </button>
+            <p class="form-note">
+              En cliquant, vous acceptez notre politique de confidentialité.
+            </p>
+            <p class="form-message" id="form-message"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="logo">
+            <a href="/" style="text-decoration: none; color: inherit;">
+              <span class="logo-text">EMKAI</span>
+            </a>
+          </div>
+          <nav class="footer-links">
+            <a href="/mentions-legales">Mentions légales</a>
+            <a href="/politique-confidentialite">Politique de confidentialité</a>
+            <a href="/cgv">CGV</a>
+          </nav>
+        </div>
+        <p class="footer-note">
+          © <span id="current-year"></span> EMKAI - Agence d'automatisation et d'intégration IA | Lille, Hauts-de-France
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("current-year").textContent = new Date().getFullYear();
+
+      // Mobile nav toggle
+      const navToggle = document.getElementById('nav-toggle');
+      const primaryNav = document.getElementById('primary-nav');
+      if (navToggle && primaryNav) {
+        navToggle.addEventListener('click', () => {
+          primaryNav.classList.toggle('active');
+        });
+        primaryNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            primaryNav.classList.remove('active');
+          });
+        });
+      }
+
+      // Contact form submission
+      const contactForm = document.getElementById('contact-form');
+      const formMessage = document.getElementById('form-message');
+
+      if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(contactForm);
+          const data = Object.fromEntries(formData.entries());
+
+          try {
+            const response = await fetch('https://hook.eu2.make.com/gs0ywvxt7g60p4angadg2v6y1s78i8qw', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+              formMessage.textContent = 'Merci ! Nous reviendrons vers vous rapidement.';
+              formMessage.style.color = '#4ade80';
+              contactForm.reset();
+            } else {
+              throw new Error('Erreur');
+            }
+          } catch (error) {
+            formMessage.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+            formMessage.style.color = '#f87171';
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
