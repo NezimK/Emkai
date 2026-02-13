@@ -3005,6 +3005,10 @@ h3 {
   font-size: 0.85rem;
   font-style: italic;
 }
+.integration-note a {
+  color: var(--primary);
+  text-decoration: underline;
+}
 
 .integration-note-arrow {
   display: block;
