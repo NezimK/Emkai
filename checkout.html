@@ -9,8 +9,8 @@
     <link rel="icon" href="/icons/favicon.ico" type="image/x-icon" />
 
     <!-- SEO Meta Tags -->
-    <title>Bientôt disponible - EMKAI | Immo Copilot</title>
-    <meta name="description" content="Immo Copilot arrive bientôt. Rejoignez la liste d'attente pour être parmi les premiers à en profiter." />
+    <title>Souscrire - EMKAI | Immo Copilot</title>
+    <meta name="description" content="Souscrivez à Immo Copilot et automatisez votre premier contact immobilier." />
     <meta name="robots" content="noindex, nofollow" />
 
     <!-- Fonts & Styles -->
@@ -346,17 +346,17 @@
 
     <main class="checkout-main">
       <div class="waitlist-container">
-        <span class="waitlist-badge">
+        <span class="waitlist-badge" id="pageBadge">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/>
             <polyline points="12 6 12 12 16 14"/>
           </svg>
-          Lancement imminent
+          <span id="badgeText">Lancement imminent</span>
         </span>
 
         <p class="waitlist-plan" id="planLabel"></p>
-        <h1>Immo Copilot arrive bientôt</h1>
-        <p class="subtitle">Nous peaufinons les derniers détails. Rejoignez la liste d'attente pour être notifié dès l'ouverture et bénéficier d'un accès prioritaire.</p>
+        <h1 id="pageTitle">Immo Copilot arrive bientôt</h1>
+        <p class="subtitle" id="pageSubtitle">Nous peaufinons les derniers détails. Rejoignez la liste d'attente pour être notifié dès l'ouverture et bénéficier d'un accès prioritaire.</p>
 
         <div class="waitlist-form-card">
           <a href="/formules" class="back-link">
@@ -426,7 +426,7 @@
 
             <!-- Submit -->
             <button type="submit" class="btn btn-primary waitlist-submit" id="submitBtn">
-              <span class="btn-text">Rejoindre la liste d'attente</span>
+              <span class="btn-text" id="submitBtnText">Rejoindre la liste d'attente</span>
               <span class="spinner"></span>
             </button>
           </form>
@@ -442,7 +442,7 @@
             <p>Nous vous contacterons dès qu'Immo Copilot sera disponible. Vous bénéficierez d'un accès prioritaire.</p>
           </div>
 
-          <p class="waitlist-note">Aucun paiement requis. Nous vous contacterons dès le lancement.</p>
+          <p class="waitlist-note" id="formNote">Aucun paiement requis. Nous vous contacterons dès le lancement.</p>
         </div>
       </div>
     </main>
@@ -476,14 +476,28 @@
         premium: { name: 'Premium', price: 439 }
       };
 
+      // Plans available for direct payment (not waitlist)
+      const payablePlans = ['essentiel'];
+
       // Get plan from URL
       const urlParams = new URLSearchParams(window.location.search);
       const planId = urlParams.get('plan');
+      const isPayable = planId && payablePlans.includes(planId);
 
       // Show plan label if valid
       const planLabel = document.getElementById('planLabel');
       if (planId && plans[planId]) {
         planLabel.textContent = `Formule ${plans[planId].name} — ${plans[planId].price} €/mois`;
+      }
+
+      // Adapt page content based on mode (payment vs waitlist)
+      if (isPayable) {
+        document.getElementById('badgeText').textContent = 'Paiement sécurisé';
+        document.getElementById('pageBadge').querySelector('svg').innerHTML = '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>';
+        document.getElementById('pageTitle').textContent = 'Souscrire à Immo Copilot';
+        document.getElementById('pageSubtitle').textContent = 'Renseignez vos informations pour accéder à votre espace et commencer à automatiser vos premiers contacts.';
+        document.getElementById('submitBtnText').textContent = 'Procéder au paiement';
+        document.getElementById('formNote').textContent = 'Paiement sécurisé via Stripe. Sans engagement, annulation à tout moment.';
       }
 
       // Account type switching
@@ -559,38 +573,63 @@
         messageEl.style.display = 'none';
 
         try {
-          // Send to Supabase waitlist table
-          const SUPABASE_URL = 'https://yptvhkmkmjasronywviq.supabase.co';
-          const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwdHZoa21rbWphc3Jvbnl3dmlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0NjQzMTYsImV4cCI6MjA1MzA0MDMxNn0.zI0TFp7OdQi5O-CYSZGYDqsPIXbKkxWYj7hIzVfV1xA';
+          if (isPayable) {
+            // Stripe checkout flow
+            const response = await fetch('https://api.emkai.fr/api/stripe/create-checkout-session', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email,
+                companyName,
+                responsableName: accountType === 'agence' ? responsableName : null,
+                accountType,
+                plan: planId
+              })
+            });
 
-          const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-              'Prefer': 'return=minimal'
-            },
-            body: JSON.stringify({
-              email,
-              company_name: companyName,
-              responsable_name: accountType === 'agence' ? responsableName : null,
-              account_type: accountType,
-              plan: planId || null
-            })
-          });
+            const data = await response.json();
 
-          if (!response.ok) {
-            throw new Error('Erreur lors de l\'inscription');
+            if (!response.ok) {
+              throw new Error(data.error || 'Erreur lors de la création du paiement');
+            }
+
+            // Redirect to Stripe Checkout
+            window.location.href = data.url;
+
+          } else {
+            // Waitlist flow (avancé, premium)
+            const SUPABASE_URL = 'https://yptvhkmkmjasronywviq.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwdHZoa21rbWphc3Jvbnl3dmlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0NjQzMTYsImV4cCI6MjA1MzA0MDMxNn0.zI0TFp7OdQi5O-CYSZGYDqsPIXbKkxWYj7hIzVfV1xA';
+
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Prefer': 'return=minimal'
+              },
+              body: JSON.stringify({
+                email,
+                company_name: companyName,
+                responsable_name: accountType === 'agence' ? responsableName : null,
+                account_type: accountType,
+                plan: planId || null
+              })
+            });
+
+            if (!response.ok) {
+              throw new Error('Erreur lors de l\'inscription');
+            }
+
+            // Show success
+            form.style.display = 'none';
+            document.getElementById('waitlistSuccess').classList.add('visible');
           }
-
-          // Show success
-          form.style.display = 'none';
-          document.getElementById('waitlistSuccess').classList.add('visible');
 
         } catch (error) {
           messageEl.className = 'waitlist-message error';
-          messageEl.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+          messageEl.textContent = error.message || 'Une erreur est survenue. Veuillez réessayer.';
           messageEl.style.display = 'block';
           submitBtn.classList.remove('loading');
           submitBtn.disabled = false;
