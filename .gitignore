@@ -48,6 +48,8 @@ skills/
 
 # Node modules (si applicable)
 node_modules/
+package.json
+package-lock.json
 
 # Environnement
 .env
